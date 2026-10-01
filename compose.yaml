@@ -35,6 +35,8 @@ services:
       NODE_ENV: development
       PORT: 3000
 
+      CHOKIDAR_USEPOLLING: "true"
+
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${POSTGRES_DB}
@@ -55,6 +57,10 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
 
 volumes:
   postgres_data:
