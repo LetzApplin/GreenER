@@ -20,6 +20,7 @@ Voltar para o [README principal](../README.md).
 ## 🛠 Tecnologias
 
 - Node.js com TypeScript
+- `tsx` para execução em desenvolvimento com recarga automática
 - API REST
 - PostgreSQL, com SQL explícito (sem ORM)
 - Autenticação com JWT
@@ -91,7 +92,6 @@ As variáveis ficam no arquivo `.env` na raiz do projeto. Use o [`.env.example`]
 | _a definir_ | Segredo usado na assinatura do JWT |
 | _a definir_ | Porta da API |
 
-<!-- Preencher a tabela com os nomes reais conforme o .env.example for criado -->
 
 ---
 
@@ -107,7 +107,7 @@ docker compose up --build
 
 ### Localmente
 
-Requisitos: Node.js e um PostgreSQL disponível com o esquema já aplicado.
+Requisitos: Node.js 24 ou superior, npm e um PostgreSQL disponível com o esquema já aplicado.
 
 ```bash
 cd backend
@@ -115,7 +115,12 @@ npm install
 npm run dev
 ```
 
-<!-- Confirmar os scripts do package.json e a porta de acesso -->
+| Comando | Função |
+| --- | --- |
+| `npm run dev` | Executa `src/server.ts` com recarga ao salvar, usando `tsx` |
+| `npm run typecheck` | Verifica os tipos sem gerar arquivos |
+| `npm run build` | Compila os arquivos de `src/` para `dist/` |
+| `npm start` | Executa `dist/server.js` após o build |
 
 ---
 
