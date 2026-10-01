@@ -146,7 +146,7 @@ O projeto é desenvolvido em três sprints. O registro de cada uma (objetivo, it
 | Gustavo Koiti | Product Owner | [@gustavokoitiyoshimura](https://github.com/gustavokoitiyoshimura) |
 | Igor Souza | Desenvolvedor | [@igorcsouzaa](https://github.com/igorcsouzaa) |
 | Marcello Campbell | Desenvolvedor | [@mparise28-dev](https://github.com/mparise28-dev) |
-| Patrícia Evora | Desenvolvedor | [@PatyMaidana](https://github.com/PatyMaidana) |
+| Patrícia R. Maidana | Desenvolvedor | [@PatyMaidana](https://github.com/PatyMaidana) |
 
 **Instituição:** FATEC Jacareí, curso de Desenvolvimento de Software Multiplataforma (DSM)
 **Parceiro:** Unilaunch
