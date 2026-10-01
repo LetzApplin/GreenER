@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+      METRICS_API_URL: ${METRICS_API_URL}
+      CARBON_API_URL: ${CARBON_API_URL}
+
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+
+      COLLECTION_INTERVAL_MS: ${COLLECTION_INTERVAL_MS}
+      EXTERNAL_API_TIMEOUT_MS: ${EXTERNAL_API_TIMEOUT_MS}
+
+      CORS_ORIGIN: ${CORS_ORIGIN}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
