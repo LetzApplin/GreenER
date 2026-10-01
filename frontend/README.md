@@ -20,8 +20,8 @@ Voltar para o [README principal](../README.md).
 ## 🛠 Tecnologias
 
 - React com TypeScript
+- Vite para desenvolvimento e build
 - Docker
-- *Adicionar bibliotecas assim que decidirmos*
 
 ---
 
@@ -78,7 +78,6 @@ O frontend se comunica com o [backend](../backend/README.md) por meio de uma URL
 | --- | --- |
 | _a definir_ | URL base da API do backend |
 
-<!-- Preencher com o nome real da variável -->
 
 ---
 
@@ -94,7 +93,7 @@ docker compose up --build
 
 ### Localmente
 
-Requisitos: Node.js e o backend em execução.
+Requisitos: Node.js 24 ou superior e npm. O backend será necessário para as funcionalidades que consumirem a API.
 
 ```bash
 cd frontend
@@ -102,7 +101,16 @@ npm install
 npm run dev
 ```
 
-<!-- Confirmar os scripts do package.json e a porta de acesso -->
+Acesse `http://localhost:5173`. A base inicia com uma página vazia, pronta para a implementação das telas.
+
+| Comando | Função |
+| --- | --- |
+| `npm run dev` | Inicia o servidor de desenvolvimento |
+| `npm run typecheck` | Verifica os tipos sem gerar arquivos |
+| `npm run build` | Verifica os tipos e gera o build em `dist/` |
+| `npm run preview` | Serve o build localmente para conferência |
+
+O Vite lê os arquivos `.env` da raiz do repositório. Variáveis destinadas ao frontend devem usar o prefixo `VITE_` e conter apenas valores públicos.
 
 ---
 
