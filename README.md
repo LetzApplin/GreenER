@@ -88,21 +88,120 @@ O fluxo completo está descrito em [`docs/arquitetura.md`](docs/arquitetura.md).
 
 ---
 
-## ▶️ Como Executar
+## ▶️ Como Executar o Ambiente com Docker
 
-1. Clone o repositório
-   ```bash
-   git clone https://github.com/LetzApplin/GreenER.git
-   cd greener
-   ```
-2. Crie o arquivo de variáveis de ambiente a partir do modelo
-   ```bash
-   cp .env.example .env
-   ```
-3. Suba a aplicação
-   ```bash
-   docker compose up --build
-   ```
+O GreenER utiliza Docker Compose para executar os principais serviços da aplicação:
+
+- Frontend em React + TypeScript
+- Backend em Node.js + TypeScript + Express
+- Banco de dados PostgreSQL
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/LetzApplin/GreenER.git
+cd GreenER
+```
+
+### 2. Crie o arquivo de variáveis de ambiente
+
+Crie o arquivo `.env` a partir do modelo disponível no projeto:
+
+```bash
+cp .env.example .env
+```
+
+Revise os valores do arquivo `.env` e ajuste-os caso necessário.
+
+### 3. Suba a aplicação com Docker
+
+Na raiz do projeto, execute:
+
+```bash
+docker compose up --build
+```
+
+Esse comando irá construir e iniciar os containers do:
+
+- PostgreSQL
+- Backend
+- Frontend
+
+### 4. Acesse os serviços
+
+Após a inicialização dos containers:
+
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:3000`
+- Healthcheck do backend: `http://localhost:3000/health`
+- PostgreSQL no host: `localhost:5433`
+
+Internamente, o backend acessa o PostgreSQL através de:
+
+```text
+postgres:5432
+```
+
+A porta `5433` é utilizada apenas para acesso ao banco a partir da máquina host.
+
+### 5. Executar em segundo plano
+
+Para subir os containers sem manter os logs no terminal:
+
+```bash
+docker compose up -d
+```
+
+### 6. Verificar o status dos containers
+
+```bash
+docker compose ps
+```
+
+### 7. Encerrar o ambiente
+
+```bash
+docker compose down
+```
+
+Os dados do PostgreSQL permanecem armazenados no volume Docker após o encerramento dos containers.
+
+Para remover também os volumes:
+
+```bash
+docker compose down -v
+```
+
+> ⚠️ O comando acima remove os dados persistidos do PostgreSQL.
+
+## 🔄 Hot Reload
+
+O ambiente de desenvolvimento foi configurado para refletir alterações no código automaticamente.
+
+Alterações em arquivos como:
+
+```text
+.ts
+.tsx
+.css
+```
+
+não exigem reconstrução das imagens.
+
+Já alterações em arquivos como:
+
+```text
+package.json
+package-lock.json
+Dockerfile
+```
+
+podem exigir uma nova construção:
+
+```bash
+docker compose up --build
+```
+   
 
 <!-- Confirmar comandos e portas de acesso quando o Docker estiver pronto -->
 
@@ -146,7 +245,7 @@ O projeto é desenvolvido em três sprints. O registro de cada uma (objetivo, it
 | Gustavo Koiti | Product Owner | [@gustavokoitiyoshimura](https://github.com/gustavokoitiyoshimura) |
 | Igor Souza | Desenvolvedor | [@igorcsouzaa](https://github.com/igorcsouzaa) |
 | Marcello Campbell | Desenvolvedor | [@mparise28-dev](https://github.com/mparise28-dev) |
-| Patrícia R. Maidana | Desenvolvedor | [@PatyMaidana](https://github.com/PatyMaidana) |
+| Patrícia Maidana | Desenvolvedor | [@PatyMaidana](https://github.com/PatyMaidana) |
 
 **Instituição:** FATEC Jacareí, curso de Desenvolvimento de Software Multiplataforma (DSM)
 **Parceiro:** Unilaunch
