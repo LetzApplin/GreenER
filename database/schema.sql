@@ -4,8 +4,8 @@ CREATE TABLE location (
   country VARCHAR(255) NOT NULL,
   region VARCHAR(255) NOT NULL,
   city VARCHAR(255) NULL,
-  latitude DOUBLE PRECISION NOT NULL,
-  longitude DOUBLE PRECISION NOT NULL
+  latitude DOUBLE PRECISION,
+  longitude DOUBLE PRECISION
 );
 
 CREATE TABLE users (
@@ -32,6 +32,7 @@ CREATE TABLE carbon_intensity (
   location_id_location INTEGER NOT NULL,
   carbon_intensity_gco2e_per_kwh DOUBLE PRECISION NOT NULL,
   renewable_share_percent DOUBLE PRECISION NOT NULL,
+  registered_at TIMESTAMPTZ NOT NULL,
   FOREIGN KEY(location_id_location)
     REFERENCES location(id_location)
       ON DELETE NO ACTION
@@ -41,7 +42,6 @@ CREATE TABLE carbon_intensity (
 CREATE TABLE metrics (
   id_metrics BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   service_id_service INTEGER NOT NULL,
-  service_location_id_location INTEGER NOT NULL,
   cpu_percent DECIMAL(5,2) NOT NULL,
   memory_gb DOUBLE PRECISION NOT NULL,
   disk_gb DOUBLE PRECISION NOT NULL,
