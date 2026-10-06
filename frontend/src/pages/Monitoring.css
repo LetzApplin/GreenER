@@ -1,0 +1,55 @@
+.monitoring-page {
+    min-height: 100vh;
+    padding: 40px 64px;
+
+    background: #062f32;
+    color:#ffffff;
+}
+
+.monitoring-header {
+    max-width: 760px;
+    margin-bottom: 32px;
+}
+
+.monitoring-header h1 {
+    margin: 0;
+
+    font-size: 32px;
+    font-weight: 700;
+
+    color:#d9e43f
+}
+
+.monitoring-header p {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+
+    color:#d7e0df;
+}
+
+.services-sumary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom:28px;
+    padding: 20px 24px;
+
+    border: 1px solid #9bcf88;
+    border-radius: 18px;
+
+    background: #123f42;
+}
+
+.services-summary span {
+    font-size: 32px;
+    font-weight:700;
+
+    color:#65d337;
+}
+
+.services-summary p {
+    margin:0;
+    font-size:18px;
+}
