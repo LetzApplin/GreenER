@@ -1,25 +1,52 @@
 import { useEffect, useState } from "react";
+import { discoverServices } from "./services/serviceApi";
+import type { Service } from "./types/service";
+import { ServiceCard } from "./components/ServiceCard";
 
-export default function App() {
-  const [mensagem, setMensagem] = useState("Carregando...");
+function App() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL;
+    async function loadServices() {
+      try {
+        const data = await discoverServices();
+        setServices(data.services);
+      } catch (err) {
+        setError("Erro ao carregar os serviços");
+      } finally {
+        setLoading(false);
+      }
+    }
 
-    fetch(`${apiUrl}/health`)
-      .then((response) => response.json())
-      .then((data) => {
-        setMensagem(data.message);
-      })
-      .catch(() => {
-        setMensagem("Erro ao conectar com o backend");
-      });
+    loadServices();
   }, []);
 
+  if (loading) {
+    return <p>Carregando serviços...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (services.length === 0) {
+    return <p>Nenhum serviço encontrado.</p>;
+  }
+
   return (
-    <>
-      <h1>GreenER</h1>
-      <p>{mensagem}</p>
-    </>
+    <div>
+      <h1>Serviços detectados</h1>
+
+     {services.map((service) => (
+  <ServiceCard
+    key={service.id}
+    service={service}
+  />
+))}
+    </div>
   );
 }
+
+export default App;
