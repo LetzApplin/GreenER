@@ -2,18 +2,27 @@ import { env } from "../../config/env.js";
 import { ExternalApiError } from "../../shared/errors/AppError.js";
 
 // ============================================================
-// TIPO: ExternalService
-// Representa o que a API externa retorna (snake_case)
+// TIPO: Location
+// Localização do serviço (retornada pela API)
 // ============================================================
-export interface ExternalService {
-  id: string;
-  name: string;
+export interface Location {
   region_code: string;
   country: string;
   region: string;
   city: string;
   latitude: number;
   longitude: number;
+}
+
+// ============================================================
+// TIPO: ExternalService
+// Representa o que a API externa retorna
+// ============================================================
+export interface ExternalService {
+  id: string;
+  name: string;
+  location: Location;
+  metrics_path: string;
 }
 
 // ============================================================
@@ -60,7 +69,7 @@ export class ServicosService {
       console.log(`✅ ${services.length} serviços encontrados`);
 
       services.forEach((svc) => {
-        console.log(`  - ${svc.name} (${svc.region_code})`);
+        console.log(`  - ${svc.name} (${svc.location.region_code})`);
       });
 
       return services;
