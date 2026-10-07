@@ -1,0 +1,123 @@
+.monitoring-page {
+  min-height: 100vh;
+  padding: 40px 64px;
+  max-width: 1376px;
+  margin: 0 auto;
+
+  background: #062f32;
+  color: #ffffff;
+}
+
+.monitoring-header {
+  max-width: 760px;
+  margin-bottom: 32px;
+}
+
+.monitoring-header h1 {
+  margin: 0;
+
+  font-size: 32px;
+  font-weight: 700;
+
+  color: #d9e43f;
+}
+
+.monitoring-header p {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+
+  color: #d7e0df;
+}
+
+.services-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+
+  margin-bottom: 28px;
+  padding: 32px 40px;
+
+  border: 1px solid #9bcf88;
+  border-radius: 24px;
+
+  background: #123f42;
+}
+
+.services-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 48px);
+  gap: 14px;
+  margin-left: auto;
+}
+
+.service-indicator {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 12px;
+  display: block;
+}
+
+.service-indicator.active {
+  background: #69d337;
+}
+
+.service-indicator.unavailable {
+  background: #ef4444;
+}
+
+.services-summary-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-width: 260px;
+}
+
+.services-summary-info strong {
+  font-size: 52px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+  
+}
+
+.services-summary-info h3 {
+  align-self: flex-start;
+
+  margin: 0 0 28px;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+
+.services-summary-info p {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: #d7e0df;
+}
+
+.monitoring-header .refresh-note {
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .monitoring-page { padding: 32px 24px; }
+  .services-summary { flex-wrap: wrap; gap: 24px; padding: 24px; }
+  .services-summary-info { min-width: 0; }
+  .services-summary-grid { margin-left: 0; }
+}
+
+@media (max-width: 600px) {
+  .monitoring-page { padding: 24px 16px; }
+  .monitoring-header h1 { font-size: 26px; }
+  .services-summary { padding: 20px; }
+  .services-summary-grid { grid-template-columns: repeat(4, 36px); gap: 10px; }
+  .service-indicator { width: 36px; height: 36px; }
+  .services-summary-info strong { font-size: 40px; }
+}
