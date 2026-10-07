@@ -67,7 +67,7 @@ export function Monitoring() {
           <h1>Monitoramento de Serviços</h1>
 
           <p>Acompanhe os serviços identificados pelo GreenER.</p>
-          <p className="refresh-note">Atualização automática a cada 10 segundos.</p>
+          <p className="refresh-note">Atualização automática a cada segundo.</p>
         </section>
 
         {loading && <p role="status">Carregando serviços...</p>}
