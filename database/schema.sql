@@ -5,7 +5,8 @@ CREATE TABLE location (
   region VARCHAR(255) NOT NULL,
   city VARCHAR(255) NULL,
   latitude DOUBLE PRECISION,
-  longitude DOUBLE PRECISION
+  longitude DOUBLE PRECISION,
+  UNIQUE (region_code, city)
 );
 
 CREATE TABLE users (
@@ -19,7 +20,7 @@ CREATE TABLE users (
 CREATE TABLE service (
   id_service INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   location_id_location INTEGER NOT NULL,
-  id VARCHAR(255) NOT NULL,
+  id VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255) NOT NULL,
   FOREIGN KEY(location_id_location)
     REFERENCES location(id_location)
