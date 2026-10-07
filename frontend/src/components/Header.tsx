@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/logo.png";
 
@@ -6,27 +7,33 @@ export function Header() {
     <header className="header-wrapper">
       <div className="app-header">
         <div className="header-logo-area">
-          <img
-            src={logo}
-            alt="GreenER"
-            className="header-logo"
-          />
+          <img src={logo} alt="GreenER" className="header-logo" />
         </div>
 
         <nav className="app-nav">
-          <a href="/">HOME</a>
-          <a href="/monitoramento">MONITORAMENTO</a>
-          <a href="/analises">ANÁLISES</a>
-          <a href="/sobre">SOBRE</a>
-          <a href="/funcionamento" >
-            FUNCIONAMENTO
-          </a>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            HOME
+          </NavLink>
+
+          <NavLink
+            to="/monitoramento"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            MONITORAMENTO
+          </NavLink>
+
+          <NavLink to="/analises">ANÁLISES</NavLink>
+
+          <NavLink to="/sobre">SOBRE</NavLink>
+
+          <NavLink to="/funcionamento">FUNCIONAMENTO</NavLink>
         </nav>
 
         <div className="header-user">
-          <div className="notification">
-            🔔
-          </div>
+          <div className="notification">🔔</div>
 
           <div className="user-avatar">
             <span />
