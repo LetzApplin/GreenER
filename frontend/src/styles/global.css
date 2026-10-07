@@ -10,6 +10,22 @@ body,
 }
 
 body {
+    font-family: "IBM Plex Sans", sans-serif;
     background:#062f32;
     color:#ffffff;
+}
+
+h1, h2, h3, h4, h5, h6, strong, b,
+.app-nav a, .service-region-code,
+.service-card-location p:first-child {
+    font-family: "IBM Plex Mono", monospace;
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+a:focus-visible, button:focus-visible {
+    outline: 2px solid #d9e43f;
+    outline-offset: 5px;
 }

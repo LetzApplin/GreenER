@@ -1,13 +1,13 @@
-import type { Service } from "../types/service";
+import type { MonitoredService } from "../types/service";
 import "./ServiceCard.css";
 
 type ServiceCardProps = {
-  service: Service;
+  service: MonitoredService;
 };
 
 export function ServiceCard({ service }: ServiceCardProps) {
   return (
-    <article className="service-card">
+    <article className={`service-card${service.available ? "" : " unavailable"}`}>
       <div className="service-card-header">
         <div>
           <h2>{service.name}</h2>
@@ -16,6 +16,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </span>
         </div>
       </div>
+
+      {!service.available && <p className="service-status">Ausente na última consulta</p>}
 
       <div className="service-card-location">
         <p>{service.location.city ?? "Cidade não informada"}</p>

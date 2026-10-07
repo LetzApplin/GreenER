@@ -18,3 +18,7 @@ export type DiscoverServicesResponse ={
     message: string;
     services: Service[];
 };
+
+export type MonitoredService = Service & {
+    available: boolean;
+};

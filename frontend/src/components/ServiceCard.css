@@ -1,4 +1,6 @@
 .service-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -15,6 +17,21 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+}
+
+.service-card.unavailable {
+  background: #421f29;
+  border-color: #f87171;
+}
+
+.service-card.unavailable .service-region-code {
+  background: #602c38;
+  color: #fecaca;
+}
+
+.service-status {
+  margin: 0;
+  color: #fecaca;
 }
 
 .service-card h2 {

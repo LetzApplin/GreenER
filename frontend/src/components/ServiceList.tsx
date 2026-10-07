@@ -1,9 +1,9 @@
-import type {Service} from "../types/service";
+import type {MonitoredService} from "../types/service";
 import {ServiceCard} from "./ServiceCard";
 import "./ServiceList.css";
 
 type ServiceListProps = {
-    services: Service[];
+    services: MonitoredService[];
 };
 
 export function ServiceList ({services}: ServiceListProps) {

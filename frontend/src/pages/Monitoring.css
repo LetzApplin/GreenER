@@ -1,6 +1,8 @@
 .monitoring-page {
   min-height: 100vh;
   padding: 40px 64px;
+  max-width: 1376px;
+  margin: 0 auto;
 
   background: #062f32;
   color: #ffffff;
@@ -62,10 +64,14 @@
   background: #69d337;
 }
 
+.service-indicator.unavailable {
+  background: #ef4444;
+}
+
 .services-summary-info {
   display: flex;
   flex-direction: column;
-  align-items: justify;
+  align-items: flex-start;
 
   min-width: 260px;
 }
@@ -92,6 +98,26 @@
 
 .services-summary-info p {
   margin: 10px 0 0;
-  font-size: 18;
+  font-size: 18px;
   color: #d7e0df;
+}
+
+.monitoring-header .refresh-note {
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .monitoring-page { padding: 32px 24px; }
+  .services-summary { flex-wrap: wrap; gap: 24px; padding: 24px; }
+  .services-summary-info { min-width: 0; }
+  .services-summary-grid { margin-left: 0; }
+}
+
+@media (max-width: 600px) {
+  .monitoring-page { padding: 24px 16px; }
+  .monitoring-header h1 { font-size: 26px; }
+  .services-summary { padding: 20px; }
+  .services-summary-grid { grid-template-columns: repeat(4, 36px); gap: 10px; }
+  .service-indicator { width: 36px; height: 36px; }
+  .services-summary-info strong { font-size: 40px; }
 }
