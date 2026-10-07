@@ -3,7 +3,7 @@ import { ServiceList } from "../components/ServiceList";
 import { discoverServices } from "../services/serviceApi";
 import type { MonitoredService } from "../types/service";
 import "./Monitoring.css";
-import { Header } from "../components/Header";
+
 
 export function Monitoring() {
   const [services, setServices] = useState<MonitoredService[]>([]);
@@ -61,7 +61,7 @@ export function Monitoring() {
 
   return (
     <>
-      <Header />
+      
       <main className="monitoring-page">
         <section className="monitoring-header">
           <h1>Monitoramento de Serviços</h1>
