@@ -1,17 +1,15 @@
 import { Router } from "express";
 import { ServicosController } from "./servicos.controller.js";
 
-// ============================================================
-// ROTAS DO MÓDULO DE SERVIÇOS
-// Prefixo: /api/servicos (definido no app.ts)
-// ============================================================
-
 const router = Router();
 const controller = new ServicosController();
 
-// GET /api/servicos/discover → Descobrir serviços
+// US01: Descobrir serviços
 router.get("/discover", (req, res, next) =>
   controller.discover(req, res, next),
 );
+
+// US02: Sincronizar serviços (salvar no banco)
+router.post("/sync", (req, res, next) => controller.sync(req, res, next));
 
 export default router;

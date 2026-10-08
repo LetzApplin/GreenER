@@ -1,5 +1,6 @@
 import { env } from "../../config/env.js";
 import { ExternalApiError } from "../../shared/errors/AppError.js";
+import { ServicosRepository } from "./servicos.repository.js";
 
 // ============================================================
 // TIPO: Location
@@ -27,9 +28,15 @@ export interface ExternalService {
 
 // ============================================================
 // CLASSE: ServicosService
-// Responsabilidade: Consultar e interpretar serviços
+// Responsabilidade: Regras de negócio do módulo de serviços
 // ============================================================
 export class ServicosService {
+  private readonly repository: ServicosRepository;
+
+  constructor() {
+    this.repository = new ServicosRepository();
+  }
+
   // ========================================================
   // US01: Consultar /services e interpretar o retorno
   // ========================================================
@@ -53,7 +60,7 @@ export class ServicosService {
         signal: controller.signal,
       });
 
-      // Verifica se a resposta foi OK
+      // Verifica se a resposta foi OK (200-299)
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
@@ -74,11 +81,72 @@ export class ServicosService {
 
       return services;
     } catch (error) {
+      // --------------------------------------------------
+      // TRATAMENTO DE ERRO
+      // Lança ExternalApiError → middleware trata
+      // --------------------------------------------------
       console.error("❌ Erro na API Metrics:", error);
       throw new ExternalApiError("Falha ao consultar a API de métricas");
     } finally {
-      // Limpa o timeout
+      // Limpa o timeout (evita memory leak)
       clearTimeout(timeoutId);
     }
+  }
+
+  // ========================================================
+  // US02: Salvar serviços no banco (evitar duplicação)
+  // ========================================================
+  async saveServices(): Promise<{ created: number; updated: number }> {
+    console.log("💾 Salvando serviços no banco...");
+
+    // 1. Descobrir serviços (US01)
+    const services = await this.discoverServices();
+
+    let created = 0;
+    let updated = 0;
+
+    // 2. Para cada serviço
+    for (const svc of services) {
+      // --------------------------------------------------
+      // PASSO 1: Verificar/criar location
+      // --------------------------------------------------
+      let location = await this.repository.findLocationByRegionAndCity(
+        svc.location.region_code,
+        svc.location.city,
+      );
+
+      if (!location) {
+        // Se não existe, cria
+        location = await this.repository.createLocation(svc.location);
+        console.log(`  📍 Location criada: ${svc.location.city}`);
+      }
+
+      // --------------------------------------------------
+      // PASSO 2: Verificar/criar service
+      // --------------------------------------------------
+      const existing = await this.repository.findByExternalId(svc.id);
+
+      if (existing) {
+        // Já existe → Atualizar
+        await this.repository.updateService({
+          id: svc.id,
+          name: svc.name,
+          locationId: location.id_location,
+        });
+        updated++;
+      } else {
+        // Não existe → Criar
+        await this.repository.createService({
+          id: svc.id,
+          name: svc.name,
+          locationId: location.id_location,
+        });
+        created++;
+      }
+    }
+
+    console.log(`✅ ${created} criados, ${updated} atualizados`);
+
+    return { created, updated };
   }
 }
