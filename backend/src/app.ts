@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { authRoutes } from "./modules/auth/auth.routes.js";
 
 const app = express();
 
@@ -17,5 +18,7 @@ app.get("/health", (_req, res) => {
     message: "GreenER backend funcionando",
   });
 });
+
+app.use("/auth", authRoutes);
 
 export default app;
