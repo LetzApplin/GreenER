@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { authRoutes } from "./modules/auth/auth.routes.js";
 import servicosRoutes from "./modules/servicos/servicos.routes.js";
 import { errorMiddleware } from "./shared/middlewares/error.middleware.js";
 
@@ -21,6 +22,7 @@ app.get("/health", (_req, res) => {
   });
 });
 
+app.use("/auth", authRoutes);
 app.use("/api/servicos", servicosRoutes);
 app.use(errorMiddleware);
 

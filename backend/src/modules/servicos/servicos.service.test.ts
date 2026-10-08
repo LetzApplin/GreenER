@@ -21,15 +21,16 @@ describe("ServicosService.discoverServices", () => {
       {
         id: "servico-1",
         name: "API de pedidos",
-        region_code: "BR-SP",
-        country: "Brasil",
-        region: "São Paulo",
-        city: "São Paulo",
-        latitude: -23.55,
-        longitude: -46.63,
+        location: {
+          region_code: "BR-SP",
+          country: "Brasil",
+          region: "São Paulo",
+          city: "São Paulo",
+          latitude: -23.55,
+          longitude: -46.63,
+        },
       },
     ];
-
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(JSON.stringify(services), {
         status: 200,
