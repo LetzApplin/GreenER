@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
-export default function App() {
-  const [mensagem, setMensagem] = useState("Carregando...");
+import { Monitoring } from "./pages/Monitoring";
+import { Home } from "./pages/Home";
+import { Header } from "./components/Header";
 
-  useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-
-    fetch(`${apiUrl}/health`)
-      .then((response) => response.json())
-      .then((data) => {
-        setMensagem(data.message);
-      })
-      .catch(() => {
-        setMensagem("Erro ao conectar com o backend");
-      });
-  }, []);
-
-  return (
+function App() {
+   return (
     <>
-      <h1>GreenER</h1>
-      <p>{mensagem}</p>
-    </>
-  );
+      <Header />
+ 
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/monitoramento" element={<Monitoring/>}/>
+      </Routes>
+      </>
+   );
+
 }
+
+export default App;

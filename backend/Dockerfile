@@ -1,7 +1,8 @@
-# Tecnologias atuais: Node.js 24, npm e TypeScript; tsx em desenvolvimento e JavaScript compilado em dist/ para execução com Node.js.
 FROM node:24-alpine
 
 WORKDIR /app
+
+RUN apk add --no-cache ca-certificates
 
 COPY package*.json ./
 
