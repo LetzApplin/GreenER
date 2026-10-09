@@ -8,7 +8,7 @@
       rgba(73, 180, 120, 0.08),
       transparent 30%
     ),
-    #063437;
+    var(--background-page);
 
   color: #f4f8f5;
   --adaptive-color: #87e46c;

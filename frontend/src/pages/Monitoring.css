@@ -4,7 +4,7 @@
   max-width: 1376px;
   margin: 0 auto;
 
-  background: #062f32;
+  background: var(--background-page);
   color: #ffffff;
 }
 

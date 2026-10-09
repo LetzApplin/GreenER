@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import { Monitoring } from "./pages/Monitoring";
 import { Home } from "./pages/Home";
 import { Header } from "./components/Header";
+import { About } from "./pages/About";
+import { HowItWorks } from "./pages/HowItWorks";
 
 function App() {
    return (
@@ -12,6 +14,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/monitoramento" element={<Monitoring/>}/>
+      <Route path="/sobre" element={<About />} />
+      <Route path="/funcionamento" element={<HowItWorks />} />
       </Routes>
       </>
    );

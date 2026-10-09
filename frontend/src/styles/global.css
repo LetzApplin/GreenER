@@ -1,3 +1,7 @@
+:root {
+    --background-page: #0c282b;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -11,7 +15,7 @@ body,
 
 body {
     font-family: "IBM Plex Sans", sans-serif;
-    background:#062f32;
+    background:var(--background-page);
     color:#ffffff;
 }
 
