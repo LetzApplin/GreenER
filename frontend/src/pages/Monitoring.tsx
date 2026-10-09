@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { ServiceList } from "../components/ServiceList";
 import { discoverServices } from "../services/serviceApi";
 import type { MonitoredService } from "../types/service";
+import { ServicePopover } from "../components/ServicePopover";
 import "./Monitoring.css";
+
 
 const REFRESH_INTERVAL_MS = 10_000;
 const REQUEST_TIMEOUT_MS = 8_000;
@@ -11,8 +13,15 @@ export function Monitoring() {
   const [services, setServices] = useState<MonitoredService[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const total = services.length;
-  const activeCount = services.filter((service) => service.available).length;
+
+  const activeCount = services.filter(
+    (service) =>
+      service.status === "active" ||
+      service.status === "new" ||
+      service.status === "returned",
+  ).length;
 
   useEffect(() => {
     let disposed = false;
@@ -28,6 +37,7 @@ export function Monitoring() {
       try {
         const data = await discoverServices(controller.signal);
         if (disposed) return;
+        
         setServices((previous) => {
           const currentById = new Map(
             data.services.map((service) => [service.id, service]),
@@ -35,14 +45,37 @@ export function Monitoring() {
           const knownIds = new Set(previous.map((service) => service.id));
           const remembered = previous.map((service) => {
             const current = currentById.get(service.id);
-            return current
-              ? { ...current, available: true }
-              : { ...service, available: false };
+            if (!current) {
+              return {
+                ...service,
+                status: "unavailable" as const,
+              };
+            }
+
+            if (service.status === "unavailable") {
+              return {
+                ...current,
+                status: "returned" as const,
+              };
+            }
+            return {
+              ...current,
+              status: "active" as const,
+            };
           });
+
+           const isFirstLoad = previous.length === 0;
+
           const discovered = [...currentById.values()]
             .filter((service) => !knownIds.has(service.id))
-            .map((service) => ({ ...service, available: true }));
+            .map((service) => ({ ...service,
+               status: isFirstLoad? ("active" as const):
+              ("new" as const), }));
+
           return [...remembered, ...discovered];
+              
+
+          
         });
 
         setError(null);
@@ -68,6 +101,22 @@ export function Monitoring() {
       controller?.abort();
     };
   }, []);
+
+  function getStatusLabel(status: MonitoredService["status"]) {
+    switch (status) {
+      case "active":
+        return "Ativo";
+
+      case "new":
+        return "Novo serviço detectado";
+
+      case "returned":
+        return "Serviço retornou";
+
+      case "unavailable":
+        return "Serviço indisponível";
+    }
+  }
 
   return (
     <>
@@ -104,15 +153,22 @@ export function Monitoring() {
 
               <div className="services-summary-grid">
                 {services.map((service) => (
-                  <span
+                  <div
                     key={service.id}
-                    className={`service-indicator ${service.available ? "active" : "unavailable"}`}
-                    title={`${service.name}: ${service.available ? "Presente na última consulta" : "Ausente na última consulta"}`}
-                    role="img"
-                    aria-label={`${service.name}: ${service.available ? "Presente" : "Ausente"} na última consulta`}
-                  />
-                ))}
-              </div>
+                    className="service-indicator-wrapper"
+                    tabIndex={0}
+                    aria-label={`${service.name}: ${getStatusLabel(service.status)}`}
+                  >
+                    <span 
+                      className={`service-indicator ${service.status}` }
+                      aria-hidden="true"
+                      />
+
+               <ServicePopover service={service}/>
+              </div> 
+              
+         ))}
+         </div>
             </section>
 
             <ServiceList services={services} />
