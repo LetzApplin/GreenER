@@ -64,6 +64,17 @@
   background: #69d337;
 }
 
+.service-indicator.new {
+  background: #d9e43f;
+  box-shadow: 0 0 14px rgba(217, 228, 63, 0.45);
+}
+
+.service-indicator.returned {
+  background: #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+}
+
+
 .service-indicator.unavailable {
   background: #ef4444;
 }
@@ -105,6 +116,24 @@
 .monitoring-header .refresh-note {
   font-size: 14px;
 }
+
+.service-indicator-wrapper {
+  position: relative;
+
+  display: flex;
+
+  outline: none;
+}
+
+.service-indicator-wrapper:hover .service-popover,
+.service-indicator-wrapper:focus .service-popover,
+.service-indicator-wrapper:focus-within .service-popover {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateX(-50%) translateY(0);
+}
+
 
 @media (max-width: 900px) {
   .monitoring-page { padding: 32px 24px; }
